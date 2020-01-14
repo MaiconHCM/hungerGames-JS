@@ -1,6 +1,7 @@
 
 app = new class App {
   constructor() {
+    this.weaponBase=new WeaponTable();
     this.scenario = new Scenario({
       name:'Cenario'
     });

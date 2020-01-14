@@ -6,7 +6,3 @@ class Scenario {
     console.log('Creating Scenario:' + JSON.stringify(config));
   }
 }
-
-
-
-
