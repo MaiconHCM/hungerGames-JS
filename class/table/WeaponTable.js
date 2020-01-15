@@ -30,6 +30,11 @@ class WeaponTable {
         damage : 2,
         durability : 15,
         weight :0.2,
+        use:function(target){
+          alert('matou');
+          target[0].kill();
+          app.echo('MAtou');
+        }
       },
       {
         name : 'faca grande',

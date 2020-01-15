@@ -11,11 +11,14 @@ class Person {
       pants: config.pants,
       shirt: config.shirt,
     }
-    this.weapons = {
-      primary: null,
-      secondary: null,
-    }
+    this.weapons = [];
     this.items = [];
+  }
+  atack(target) {
+    for (let index = 0; index < this.weapons.length; index--) {
+      this.weapons[index].use(target);
+    }
+
   }
 
 }

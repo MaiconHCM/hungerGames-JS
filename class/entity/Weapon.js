@@ -6,5 +6,6 @@ class Weapon {
         this.durability = config.durability;
         this.wear = 0;
         this.weight = config.weight;
+        this.use = config.use;
     }
 }

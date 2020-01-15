@@ -15,13 +15,15 @@ class PersonCollection {
   add(array) {
     for (let index = 0; index < array.length; index++) {
       array[index].id=this.persons.length;
+
       this.persons.push(new Person(array[index]));
       console.log('Pessoa adicionada:'+JSON.stringify(array[index]));
     }
   }
   update(array){
     for (let index = 0; index < array.length; index++) {
-      id=array[index].id;
+      let id=array[index].id;
+
       this.persons[id]=array[index];
       console.log('Pessoa editada:'+JSON.stringify(array[index]));
     }

@@ -22,12 +22,12 @@ class Episode {
 
   randomEvent(id) {
     let protagonist = this.scenario.personsCollection.getById(id);
-    
+
     //Lista de eventos que podem ocorrer, cada evento possui duas funções:
     //1-execute, Execução do evento, o que ocorre quando aquele evento ser executado.
     //2-probability, Probalidade do evento, de acordo ao jogador, qual chance desse evento ocorrer. 
     let event = [
-      {
+      /*{
         execute: function (origin) {
           app.echo(protagonist.name + ' foi abduzido por um alienigena.');
           origin.scenario.personsCollection.kill(protagonist.id);
@@ -40,6 +40,27 @@ class Episode {
         execute: function (origin) {
           app.echo(protagonist.name + ' caiu em um buraco.');
           origin.scenario.personsCollection.kill(protagonist.id);
+        },
+        probability: function (origin) {
+          return 5;
+        }
+      },*/
+      {
+        execute: function (origin) {
+          app.echo(protagonist.name + ' encontrou uma faca');
+          protagonist.weapon=app.weaponBase.getById(0);
+
+        },
+        probability: function (origin) {
+          return 5;
+        }
+      },
+      {
+        execute: function (origin) {
+          let person=origin.getRandomPerson();
+
+          app.echo(protagonist.name + ' brigou');
+          origin.fight([protagonist],[person]);
         },
         probability: function (origin) {
           return 5;
@@ -79,6 +100,20 @@ class Episode {
     };
     probabilityList[index].execute(this);
 
+  }
+  fight(arrayA, arrayB) {
+    //Grupo 1 Ataca
+    for (let index = 0; index < arrayA.length; index++) {
+      arrayB=this.shuffle(arrayB);
+      arrayA[index].atack(arrayB);
+    }
+
+    //Grupo 2 Revida
+    for (let index = 0; index < arrayB.length; index++) {
+      arrayA=this.shuffle(arrayA);
+      arrayB[index].atack(arrayA);
+    }
+    
   }
 
   //Gera aleatoriamente um inteiro dentro de um Range
