@@ -26,7 +26,7 @@ app = new class App {
   }
 
   next() {
-    this.scenario = new Episode(this.scenario);
+    let episode = new Episode(this.scenario);
   }
   newPerson() {
     this.planeta.addPerson(pessoa);

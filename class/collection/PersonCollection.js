@@ -28,12 +28,5 @@ class PersonCollection {
       console.log('Pessoa editada:'+JSON.stringify(array[index]));
     }
   }
-  kill(id){
-    this.persons[id].alive=false;
-    console.log(this.persons[id].name+' morreu');
-  }
-  revive(id){
-    this.persons[id].alive=true;
-  }
 
 }

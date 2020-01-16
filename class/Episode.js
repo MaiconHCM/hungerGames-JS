@@ -6,8 +6,6 @@ class Episode {
     this.turnPersons = this.scenario.personsCollection.getAliveList().length;
 
     this.actPersons();
-
-    return this.scenario;
   }
 
   actPersons() {
@@ -48,26 +46,27 @@ class Episode {
       {
         execute: function (origin) {
           app.echo(protagonist.name + ' encontrou uma faca');
-          protagonist.weapon=app.weaponBase.getById(0);
-
+          let weapons = [app.weaponBase.getById(0)];
+          protagonist.addWeapon(weapons);
         },
         probability: function (origin) {
-          return 5;
+          return 1;
         }
       },
       {
         execute: function (origin) {
-          let person=origin.getRandomPerson();
-
-          app.echo(protagonist.name + ' brigou');
-          origin.fight([protagonist],[person]);
+          let person = origin.getRandomPerson();
+          origin.fight([protagonist], [person]);
         },
         probability: function (origin) {
-          return 5;
+          if (origin.turnRemains() > 0) {
+            return 1;
+          } else {
+            return 0;
+          }
         }
       },
     ]
-
     //Total de Range
     let totalRange = 0;
     //Lista de probalidades
@@ -92,35 +91,37 @@ class Episode {
 
     //Escolhe aleatoriamente um range no qual vai ser escolhido a probalidade
     let random = this.getRandomInt(1, totalRange);
-
     //Faz while na Lista de probalidades, para encontrar o devido evento
-    let index = 0;
-    while (probabilityList[index]['range'] <= random) {
-      index++;
-    };
-    probabilityList[index].execute(this);
+    let chosenEvent;
+    for (let index = 0; index < probabilityList.length; index++) {
+      if (probabilityList[index]['range'] > random) {
+        break;
+      }
+      chosenEvent = index;
+    }
+    probabilityList[chosenEvent].execute(this);
 
   }
   fight(arrayA, arrayB) {
     //Grupo 1 Ataca
     for (let index = 0; index < arrayA.length; index++) {
-      arrayB=this.shuffle(arrayB);
+      arrayB = this.shuffle(arrayB);
       arrayA[index].atack(arrayB);
     }
 
     //Grupo 2 Revida
     for (let index = 0; index < arrayB.length; index++) {
-      arrayA=this.shuffle(arrayA);
+      arrayA = this.shuffle(arrayA);
       arrayB[index].atack(arrayA);
     }
-    
+
   }
 
   //Gera aleatoriamente um inteiro dentro de um Range
   getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   //Funcão utlizado para obter uma pessoa aletoria que não tenha seu turno passado
